@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, Response
 from twilio.twiml.messaging_response import MessagingResponse
 from twilio.rest import Client
 import os
@@ -103,7 +103,8 @@ def webhook():
         resp.message(str(response))
         
         logger.debug(f"Sending response: {str(resp)}")
-        return str(resp)
+        #return str(resp)
+        return Response(str(resp), mimetype="application/xml")
     except Exception as e:
         logger.error(f"Error in webhook: {str(e)}", exc_info=True)
         resp = MessagingResponse()
